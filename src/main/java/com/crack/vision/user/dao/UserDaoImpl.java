@@ -1,5 +1,7 @@
 package com.crack.vision.user.dao;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
 import com.crack.vision.user.entity.User;
@@ -19,9 +21,20 @@ public class UserDaoImpl implements UserDao {
         try {
             return userRepo.save(user);
         } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
 
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        try {
+            return userRepo.findByEmailAndIsDeletedFalse(email);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 }

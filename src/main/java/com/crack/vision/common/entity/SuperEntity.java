@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
+import org.hibernate.annotations.Where;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,6 +35,7 @@ public class SuperEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
+    @Where(clause = "is_deleted = false")
     @Column(columnDefinition = "boolean default false", name = "is_deleted")
     private Boolean isDeleted;
 
