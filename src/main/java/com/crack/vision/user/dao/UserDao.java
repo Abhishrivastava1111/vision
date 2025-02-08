@@ -9,4 +9,6 @@ public interface UserDao {
     User saveUser(User user);
 
     Optional<User> findByEmail(String email);
+
+    Optional<User> findById(Integer id);
 }

@@ -1,3 +1,4 @@
+
 package com.crack.vision.user.service;
 
 import java.util.Optional;
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String saveUser(UserDto userDto) {
-
+        System.out.println("UserDto: " + userDto);
         Optional<Role> optionalRole = roleDao.getRoleById(userDto.getRole());
         if (optionalRole.isPresent()) {
             User user = modelMapper.map(userDto, User.class);
@@ -52,6 +53,18 @@ public class UserServiceImpl implements UserService {
             } else {
                 throw new RuntimeException("Invalid password");
             }
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
+    public void uploadDocument(Integer userId, String filePath, String description) {
+        Optional<User> userOptional = userDao.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setPicture(filePath);
+            userDao.saveUser(user);
         } else {
             throw new RuntimeException("User not found");
         }

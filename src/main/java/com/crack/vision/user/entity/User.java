@@ -35,7 +35,7 @@ public class User extends SuperEntity {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @Column(name = "picture")
+    @Column(name = "picture", columnDefinition = "TEXT")
     private String picture;
 
     @Column(name = "country_code")

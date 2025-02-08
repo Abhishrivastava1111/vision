@@ -37,4 +37,14 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public Optional<User> findById(Integer id) {
+        try {
+            return userRepo.findByIdAndIsDeletedFalse(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
 }
