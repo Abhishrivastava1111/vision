@@ -9,4 +9,6 @@ public interface UserService {
     Integer loginUser(String email, String password);
 
     void uploadDocument(Integer userId, String filePath, String description);
+
+    
 }

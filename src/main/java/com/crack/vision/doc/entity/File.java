@@ -29,4 +29,7 @@ public class File extends SuperEntity {
     @OneToOne
     private User uploadedBy;
 
+    @Column(name="user_Id")
+    private Integer userId;
+
 }

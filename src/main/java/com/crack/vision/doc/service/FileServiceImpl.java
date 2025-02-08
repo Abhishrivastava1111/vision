@@ -1,7 +1,13 @@
 package com.crack.vision.doc.service;
 
 import java.util.Base64;
+import java.util.List;
 
+import org.modelmapper.internal.bytebuddy.asm.Advice;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +22,7 @@ public class FileServiceImpl implements FileService {
 
     private final FileDao fileDao;
 
-    public String uploadFile(MultipartFile multipartFile, String fileName) {
+    public String uploadFile(MultipartFile multipartFile, String fileName,Integer userId) {
 
         try {
             if (multipartFile != null && !multipartFile.isEmpty()) {
@@ -25,6 +31,7 @@ public class FileServiceImpl implements FileService {
                 file.setName(fileName);
                 file.setFile(base64Image);
                 file.setUploadedBy(null);
+                file.setUserId(userId);
                 //To be refactored
                 return fileDao.save(file).toString();
             } else {
@@ -34,5 +41,12 @@ public class FileServiceImpl implements FileService {
             return "Exception in handelling file";
         }
     }
+
+    public Page<File> getFiles(Integer userId, int page, int size){
+       
+        Pageable pageable = PageRequest.of(page,size,Sort.by("id"));
+        return fileDao.getFiles(userId,pageable);
+    }
+
 
 }

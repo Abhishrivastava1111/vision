@@ -1,5 +1,9 @@
 package com.crack.vision.doc.dao;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.crack.vision.doc.entity.File;
@@ -19,6 +23,10 @@ public class FileDaoImpl implements FileDao {
         } catch (Exception e) {
             throw new RuntimeException("Error in saving file");
         }
+    }
+
+    public Page<File> getFiles(Integer userId,Pageable pageable){
+       return  fileRepo.getListOfFilesByUserId(userId,pageable);
     }
 
 }

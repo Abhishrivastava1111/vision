@@ -16,6 +16,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class User extends SuperEntity {
 
+    /*
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private String userId; */
+
     @Column(name = "last_name")
     private String lastName;
 
