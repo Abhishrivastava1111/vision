@@ -27,7 +27,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public String saveUser(UserDto userDto) {
         System.out.println("UserDto: " + userDto);
+        Optional<User> userOptional = userDao.findByEmail(userDto.getEmail());
         Optional<Role> optionalRole = roleDao.getRoleById(userDto.getRole());
+        if (userOptional.isPresent()) {
+            throw new RuntimeException("Email already exist");
+        }
         if (optionalRole.isPresent()) {
             User user = modelMapper.map(userDto, User.class);
             user.setRole(optionalRole.get());
