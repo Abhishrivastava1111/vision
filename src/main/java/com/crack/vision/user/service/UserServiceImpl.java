@@ -4,6 +4,8 @@ package com.crack.vision.user.service;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.crack.vision.user.dao.RoleDao;
@@ -16,10 +18,13 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Component
+@Configuration
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
+    
     private final RoleDao roleDao;
 
     private final ModelMapper modelMapper;
@@ -73,4 +78,27 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("User not found");
         }
     }
+
+
+    public Optional<User> getUserDetails(Integer userId){
+        return userDao.findById(userId);
+    }
+
+    public String editUser(Integer userId, UserDto userDto){
+
+        Optional<User> userOptional = userDao.findById(userId);
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            user.setFirstName(userDto.getFirstName());
+            user.setLastName(userDto.getLastName());
+            user.setEmail(userDto.getEmail());
+            user.setPhone(userDto.getPhone());
+            userDao.saveUser(user);
+            return "User details updated successfully";
+        }
+        else{
+            throw new RuntimeException("User not found");
+        }
+    }
+
 }

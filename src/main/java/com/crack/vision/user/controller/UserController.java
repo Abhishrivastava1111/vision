@@ -5,8 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.crack.vision.user.dto.LoginDto;
 import com.crack.vision.user.dto.UserDto;
+import com.crack.vision.user.entity.User;
 import com.crack.vision.user.service.UserService;
 
 import jakarta.validation.Valid;
@@ -74,4 +77,22 @@ public class UserController {
 
         return filePath.toString();
     }
+
+    @GetMapping("/userDetails")
+    public ResponseEntity<Optional<User>> getUserDetails(@RequestParam Integer userId){
+        Integer usersId = userId;
+        return ResponseEntity.ok(userService.getUserDetails(userId));
+    }
+
+
+    @PostMapping("/editUser")
+    public ResponseEntity<String> editUser(@RequestParam Integer userId, @RequestBody UserDto userDto){
+        try {
+           String responseString = userService.editUser(userId, userDto);
+           return ResponseEntity.ok(responseString);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
+    }
+
 }

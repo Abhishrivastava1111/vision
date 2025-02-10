@@ -1,6 +1,9 @@
 package com.crack.vision.user.service;
 
+import java.util.Optional;
+
 import com.crack.vision.user.dto.UserDto;
+import com.crack.vision.user.entity.User;
 
 public interface UserService {
 
@@ -10,5 +13,8 @@ public interface UserService {
 
     void uploadDocument(Integer userId, String filePath, String description);
 
+    Optional<User> getUserDetails(Integer userId);
+
+    String editUser(Integer userId, UserDto userDto);
     
 }

@@ -12,4 +12,6 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 
     Optional<User> findByIdAndIsDeletedFalse(Integer id);
 
+    Optional<User> findById(Integer userId);
+
 }
